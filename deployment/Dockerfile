@@ -12,24 +12,10 @@ WORKDIR /code
 # Install dependencies
 COPY requirements.txt /code/
 
-RUN python -m pip install --upgrade pip
+RUN python -m pip install --upgrade pip \
+    && python -m pip install --no-cache-dir -r requirements.txt \
+    && python -m pip check
 
-RUN python -m pip install \
-    "mlflow==2.22.5" \
-    "numpy==2.2.6" \
-    "pandas==2.2.3" \
-    "scikit-learn==1.6.1" \
-    joblib \
-    azure-storage-blob \
-    azure-identity \
-    azure-ai-ml \
-    azureml-mlflow \
-    fastapi \
-    uvicorn \
-    python-dotenv \
-    pytest
-
-RUN python -m pip check
 # Copy project
 COPY ./app ./
 
